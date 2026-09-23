@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ساختار پروتئین‌ها | آکادمی بیوانفورماتیک</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ===== Protein specific ===== */
+.viewer-wrap{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  margin-bottom:22px;
+}
+.viewer-header{
+  padding:16px 20px;
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.viewer-header h3{
+  font-size:.95rem;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.viewer-header h3::before{
+  content:"";
+  width:8px;height:8px;
+  background:#22c55e;
+  border-radius:50%;
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.4}
+}
+.viewer-header .pdb-id{
+  font-family:'Courier New',monospace;
+  font-size:.8rem;
+  direction:ltr;
+  background:rgba(255,255,255,.15);
+  padding:4px 12px;
+  border-radius:8px;
+}
+#viewer{
+  width:100%;
+  height:480px;
+  background:#0f172a;
+  position:relative;
+}
+@media(max-width:640px){
+  #viewer{height:360px}
+}
+
+/* Control panel */
+.viewer-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:14px 18px;
+  background:#f8fafc;
+  border-top:1px solid var(--line);
+}
+.viewer-controls .ctrl-btn{
+  padding:7px 14px;
+  border-radius:9px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-family:inherit;
+  font-size:.78rem;
+  font-weight:500;
+  cursor:pointer;
+  color:var(--ink);
+  transition:.2s;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.viewer-controls .ctrl-btn:hover{
+  border-color:var(--purple);
+  color:var(--purple);
+  background:var(--purple-soft);
+}
+.viewer-controls .ctrl-btn.active{
+  background:var(--purple);
+  color:#fff;
+  border-color:var(--purple);
+}
+
+/* Protein selector */
+.protein-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:12px;
+  margin-bottom:22px;
+}
+.protein-btn{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 16px;
+  text-align:right;
+  cursor:pointer;
+  font-family:inherit;
+  color:inherit;
+  transition:.22s;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.protein-btn:hover{
+  border-color:var(--purple);
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px -8px rgba(124,58,237,.25);
+}
+.protein-btn.active{
+  background:var(--purple-soft);
+  border-color:var(--purple);
+}
+.protein-btn .p-id{
+  font-family:'Courier New',monospace;
+  font-size:.75rem;
+  font-weight:700;
+  color:var(--purple);
+  direction:ltr;
+}
+.protein-btn .p-name{
+  font-size:.85rem;
+  font-weight:600;
+  color:var(--ink);
+}
+.protein-btn .p-desc{
+  font-size:.72rem;
+  color:var(--ink-soft);
+}
+
+/* Info panel */
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:12px;
+  margin-bottom:22px;
+}
+.info-item{
+  background:#fbfdff;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:12px 14px;
+}
+.info-item .i-label{
+  font-size:.72rem;
+  color:var(--ink-soft);
+  font-weight:600;
+  margin-bottom:4px;
+}
+.info-item .i-value{
+  font-size:.9rem;
+  font-weight:700;
+  color:var(--ink);
+  direction:ltr;
+  text-align:right;
+}
+
+/* Levels cards */
+.levels-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
+  margin-top:20px;
+}
+.level-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:20px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.level-card::before{
+  content:"";
+  position:absolute;
+  top:0;right:0;
+  width:60px;height:60px;
+  background:radial-gradient(circle at top right, var(--purple-soft), transparent 70%);
+}
+.level-card .lvl-num{
+  display:inline-block;
+  font-size:.7rem;
+  font-weight:700;
+  background:var(--purple-soft);
+  color:var(--purple);
+  padding:3px 10px;
+  border-radius:20px;
+  margin-bottom:10px;
+}
+.level-card h4{
+  font-size:.95rem;
+  font-weight:700;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.level-card p{
+  font-size:.83rem;
+  color:var(--ink-soft);
+  line-height:1.9;
+}
+.level-card .en{
+  font-size:.72rem;
+  color:var(--purple);
+  font-weight:500;
+  direction:ltr;
+  margin-top:6px;
+  display:block;
+}
+
+/* Loading spinner */
+.spinner{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  color:#a855f7;
+  font-size:.85rem;
+  text-align:center;
+}
+.spinner svg{
+  width:32px;height:32px;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{
+  from{transform:rotate(0)}
+  to{transform:rotate(360deg)}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site">
+  <div class="head-wrap">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3c0 4 8 5 8 9s-8 5-8 9"/>
+          <path d="M16 3c0 4-8 5-8 9s8 5 8 9"/>
+          <path d="M9 7h6M9 12h6M9 17h6"/>
+        </svg>
+      </div>
+      <div>
+        <h1>آکادمی بیوانفورماتیک</h1>
+        <p>آموزش تعاملی برای مهندسی پزشکی</p>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">خانه</a>
+      <a href="index.html#analyzer">ابزار توالی</a>
+      <a href="alignment.html">هم‌ترازی</a>
+      <a href="proteins.html" class="active">پروتئین‌ها</a>
+      <a href="index.html#modules">ماژول‌ها</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <span class="badge">ماژول ۳ — ساختار پروتئین</span>
+  <h2>ساختار <span>پروتئین‌ها</span> را در سه‌بعد ببین</h2>
+  <p class="lead">
+    ساختار چهار سطحی پروتئین را بشناسید و پروتئین‌های معروف را به‌صورت سه‌بعدی از بانک داده PDB مشاهده کنید. با ماوس بچرخانید، بزرگ‌نمایی کنید و با هر مدل نمایشی بازی کنید.
+  </p>
+</div>
+
+<!-- ===== PROTEIN VIEWER ===== -->
+<section id="viewer-section">
+  <div class="sec-head">
+    <div class="eyebrow">نمایشگر تعاملی</div>
+    <h3>مشاهده‌ی سه‌بعدی پروتئین‌ها</h3>
+    <p>یکی از پروتئین‌های معروف را انتخاب کنید یا کد PDB دلخواه خود را وارد کنید.</p>
+  </div>
+
+  <!-- Protein selector -->
+  <div class="protein-grid" id="proteinGrid"></div>
+
+  <!-- Custom PDB input -->
+  <div class="analyzer" style="margin-bottom:22px;">
+    <h3>یا کد PDB دلخواه را وارد کنید</h3>
+    <p class="hint">یک کد چهار حرفی مثل <code style="background:#f1f5f9;padding:2px 8px;border-radius:5px;direction:ltr;display:inline-block;">1CRN</code> یا <code style="background:#f1f5f9;padding:2px 8px;border-radius:5px;direction:ltr;display:inline-block;">4HHB</code></p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <input type="text" id="customPdb" placeholder="مثلاً: 1CRN" maxlength="4"
+             style="flex:1;min-width:180px;padding:11px 16px;border-radius:10px;border:1px solid var(--line);font-family:'Courier New',monospace;font-size:1rem;direction:ltr;text-align:center;text-transform:uppercase;outline:none;">
+      <button class="action-btn primary" id="btnLoadCustom">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        بارگذاری
+      </button>
+    </div>
+  </div>
+
+  <!-- Viewer -->
+  <div class="viewer-wrap">
+    <div class="viewer-header">
+      <h3>نمایشگر سه‌بعدی</h3>
+      <span class="pdb-id" id="currentPdb">PDB: —</span>
+    </div>
+    <div id="viewer">
+      <div class="spinner" id="spinner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+        <div style="margin-top:10px;">در حال بارگذاری…</div>
+      </div>
+    </div>
+    <div class="viewer-controls">
+      <button class="ctrl-btn active" data-style="cartoon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+        کارتونی
+      </button>
+      <button class="ctrl-btn" data-style="sphere">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>
+        کره‌ای
+      </button>
+      <button class="ctrl-btn" data-style="stick">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19L19 5"/></svg>
+        میله‌ای
+      </button>
+      <button class="ctrl-btn" data-style="line">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/></svg>
+        خطی
+      </button>
+      <button class="ctrl-btn" id="btnSpin">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.9-3.4L23 10M1 14l4.6 4.4A9 9 0 0 0 20.5 15"/></svg>
+        چرخش خودکار
+      </button>
+      <button class="ctrl-btn" id="btnReset">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        بازنشانی
+      </button>
+    </div>
+  </div>
+
+  <!-- Info panel -->
+  <div class="info-grid" id="infoGrid"></div>
+</section>
+
+<!-- ===== EDUCATIONAL SECTION ===== -->
+<section id="learn">
+  <div class="sec-head">
+    <div class="eyebrow">آموزش</div>
+    <h3>ساختار چهار سطحی پروتئین</h3>
+    <p>از زنجیره‌ی آمینواسیدی تا کمپلکس مولتی‌ساب‌یونیت</p>
+  </div>
+
+  <div class="levels-grid">
+    <div class="level-card">
+      <span class="lvl-num">سطح ۱</span>
+      <h4>ساختار اولیه</h4>
+      <p>ترتیب خطی آمینواسیدها در زنجیره‌ی پلی‌پپتیدی. این ترتیب توسط توالی DNA تعیین می‌شود و پایه‌ی همه‌ی سطوح بالاتر است.</p>
+      <span class="en">Primary Structure</span>
+    </div>
+
+    <div class="level-card">
+      <span class="lvl-num">سطح ۲</span>
+      <h4>ساختار دوم</h4>
+      <p>الگوهای محلی تاشدگی مانند مارپیچ آلفا (α-helix) و صفحه بتا (β-sheet). این ساختارها از پیوندهای هیدروژنی بین اسکلت پپتیدی تشکیل می‌شوند.</p>
+      <span class="en">Secondary Structure</span>
+    </div>
+
+    <div class="level-card">
+      <span class="lvl-num">سطح ۳</span>
+      <h4>ساختار سوم</h4>
+      <p>شکل سه‌بعدی کامل یک زنجیره‌ی پلی‌پپتیدی. از برهم‌کنش‌های آب‌گریز، پیوندهای دی‌سولفیدی، یونی و هیدروژنی تشکیل می‌شود.</p>
+      <span class="en">Tertiary Structure</span>
+    </div>
+
+    <div class="level-card">
+      <span class="lvl-num">سطح ۴</span>
+      <h4>ساختار چهارم</h4>
+      <p>آرایش چند زنجیره‌ی پلی‌پپتیدی (ساب‌یونیت) در یک کمپلکس. مثال معروف: هموگلوبین با ۴ ساب‌یونیت.</p>
+      <span class="en">Quaternary Structure</span>
+    </div>
+  </div>
+
+  <div class="note-box" style="margin-top:24px;">
+    <b>💡 نکته:</b> هرچه ساختار پروتئین در سطح بالاتری حفظ شود، عملکرد آن دقیق‌تر است. دناتوره شدن (Denaturation) با حرارت، pH یا مواد شیمیایی می‌تواند ساختار دوم، سوم و چهارم را تخریب کند، اما ساختار اولیه (توالی) دست‌نخورده می‌ماند.
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site">
+  <div class="fname">ابوالفضل اجلّی</div>
+  <div class="fsub">دانشجوی مهندسی پزشکی — دانشگاه صنعتی همدان</div>
+  <small>⚠️ داده‌های ساختاری از بانک داده پروتئین (RCSB PDB) بارگذاری می‌شوند. این ابزار صرفاً جنبه آموزشی دارد.</small>
+</footer>
+
+<!-- 3Dmol.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/3dmol@2.4.0/build/3Dmol-min.js"></script>
+<script src="proteins.js"></script>
+</body>
+</html>

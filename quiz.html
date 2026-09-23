@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>واژه‌نامه و خودآزمایی | آکادمی بیوانفورماتیک</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ===== Tabs ===== */
+.page-tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:26px;
+  background:#f1f5f9;
+  padding:6px;
+  border-radius:14px;
+  width:fit-content;
+  flex-wrap:wrap;
+}
+.page-tabs button{
+  padding:11px 24px;
+  border-radius:10px;
+  border:none;
+  background:transparent;
+  font-family:inherit;
+  font-size:.88rem;
+  font-weight:600;
+  color:var(--ink-soft);
+  cursor:pointer;
+  transition:.2s;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.page-tabs button.active{
+  background:#fff;
+  color:var(--green);
+  box-shadow:0 2px 8px rgba(15,23,42,.08);
+}
+.page-tabs button svg{width:16px;height:16px}
+
+/* ===== Glossary ===== */
+.glossary-controls{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:22px;
+  align-items:center;
+}
+.glossary-search{
+  flex:1;
+  min-width:240px;
+  position:relative;
+}
+.glossary-search input{
+  width:100%;
+  padding:12px 44px 12px 16px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-family:inherit;
+  font-size:.9rem;
+  color:var(--ink);
+  outline:none;
+  transition:.2s;
+}
+.glossary-search input:focus{
+  border-color:var(--green);
+  box-shadow:0 0 0 4px var(--green-soft);
+}
+.glossary-search svg{
+  position:absolute;
+  right:14px;top:50%;
+  transform:translateY(-50%);
+  width:18px;height:18px;
+  color:var(--green);
+  pointer-events:none;
+}
+.category-chips{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.category-chips button{
+  padding:6px 14px;
+  border-radius:20px;
+  background:#fff;
+  border:1px solid var(--line);
+  font-family:inherit;
+  font-size:.76rem;
+  font-weight:500;
+  color:var(--ink-soft);
+  cursor:pointer;
+  transition:.2s;
+}
+.category-chips button:hover{
+  border-color:var(--green);
+  color:var(--green);
+}
+.category-chips button.active{
+  background:var(--green);
+  color:#fff;
+  border-color:var(--green);
+}
+
+.glossary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:14px;
+}
+.term-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:18px 20px;
+  box-shadow:var(--shadow);
+  transition:.22s;
+  position:relative;
+  overflow:hidden;
+}
+.term-card::before{
+  content:"";
+  position:absolute;
+  top:0;right:0;bottom:0;
+  width:3px;
+  background:var(--green);
+}
+.term-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--green);
+  box-shadow:var(--shadow-lg);
+}
+.term-card .term-en{
+  font-size:.95rem;
+  font-weight:800;
+  color:var(--green);
+  direction:ltr;
+  text-align:right;
+  margin-bottom:4px;
+}
+.term-card .term-fa{
+  font-size:.85rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+.term-card .term-def{
+  font-size:.82rem;
+  color:var(--ink-soft);
+  line-height:1.9;
+}
+.term-card .term-cat{
+  display:inline-block;
+  font-size:.68rem;
+  padding:2px 9px;
+  border-radius:20px;
+  background:var(--green-soft);
+  color:var(--green);
+  font-weight:600;
+  margin-top:10px;
+}
+
+/* ===== Quiz ===== */
+.quiz-intro{
+  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  color:#fff;
+  border-radius:var(--radius);
+  padding:30px;
+  margin-bottom:24px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.quiz-intro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:radial-gradient(rgba(255,255,255,.1) 1px, transparent 1px);
+  background-size:20px 20px;
+  pointer-events:none;
+}
+.quiz-intro h3{
+  font-size:1.3rem;
+  font-weight:800;
+  margin-bottom:8px;
+  position:relative;
+}
+.quiz-intro p{
+  font-size:.9rem;
+  opacity:.92;
+  margin-bottom:18px;
+  position:relative;
+}
+.quiz-stats{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  position:relative;
+}
+.quiz-stat{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:12px;
+  padding:10px 20px;
+  backdrop-filter:blur(4px);
+}
+.quiz-stat .qs-num{
+  font-size:1.4rem;
+  font-weight:800;
+  line-height:1.2;
+}
+.quiz-stat .qs-lbl{
+  font-size:.72rem;
+  opacity:.85;
+  margin-top:2px;
+}
+
+.quiz-progress{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:16px 20px;
+  margin-bottom:22px;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.quiz-progress .qp-text{
+  font-size:.84rem;
+  font-weight:600;
+  color:var(--ink-soft);
+  white-space:nowrap;
+}
+.quiz-progress .qp-bar{
+  flex:1;
+  min-width:120px;
+  height:8px;
+  background:#f1f5f9;
+  border-radius:20px;
+  overflow:hidden;
+}
+.quiz-progress .qp-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--green),var(--blue));
+  border-radius:20px;
+  transition:width .4s ease;
+}
+.quiz-progress .qp-score{
+  font-size:.84rem;
+  font-weight:700;
+  color:var(--green);
+  white-space:nowrap;
+}
+
+.question-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px 26px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+  animation:fade .35s ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+.question-card .q-num{
+  display:inline-block;
+  font-size:.72rem;
+  font-weight:700;
+  color:var(--purple);
+  background:var(--purple-soft);
+  padding:3px 12px;
+  border-radius:20px;
+  margin-bottom:12px;
+}
+.question-card .q-text{
+  font-size:.98rem;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.9;
+  margin-bottom:18px;
+}
+.options{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.option{
+  padding:13px 18px;
+  border-radius:11px;
+  border:1.5px solid var(--line);
+  background:#fff;
+  font-family:inherit;
+  font-size:.88rem;
+  text-align:right;
+  color:var(--ink);
+  cursor:pointer;
+  transition:.2s;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.option:hover:not(.disabled){
+  border-color:var(--purple);
+  background:var(--purple-soft);
+}
+.option .opt-letter{
+  width:26px;height:26px;
+  border-radius:50%;
+  background:#f1f5f9;
+  color:var(--ink-soft);
+  display:grid;
+  place-items:center;
+  font-size:.78rem;
+  font-weight:700;
+  flex-shrink:0;
+  transition:.2s;
+}
+.option.correct{
+  background:var(--green-soft);
+  border-color:var(--green);
+  color:#15803d;
+}
+.option.correct .opt-letter{
+  background:var(--green);
+  color:#fff;
+}
+.option.wrong{
+  background:var(--red-soft);
+  border-color:var(--red);
+  color:#991b1b;
+}
+.option.wrong .opt-letter{
+  background:var(--red);
+  color:#fff;
+}
+.option.disabled{
+  cursor:default;
+  opacity:.75;
+}
+.option.disabled.correct,
+.option.disabled.wrong{
+  opacity:1;
+}
+
+.feedback{
+  margin-top:14px;
+  padding:12px 16px;
+  border-radius:10px;
+  font-size:.85rem;
+  line-height:1.9;
+  border-right:4px solid;
+  animation:fade .3s ease;
+}
+.feedback.correct{
+  background:var(--green-soft);
+  border-color:var(--green);
+  color:#15803d;
+}
+.feedback.wrong{
+  background:var(--red-soft);
+  border-color:var(--red);
+  color:#991b1b;
+}
+.feedback b{font-weight:700}
+
+.quiz-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+}
+
+/* ===== Result screen ===== */
+.result-screen{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:40px 30px;
+  text-align:center;
+  box-shadow:var(--shadow-lg);
+  animation:fade .4s ease;
+}
+.result-circle{
+  width:160px;height:160px;
+  border-radius:50%;
+  margin:0 auto 24px;
+  display:grid;
+  place-items:center;
+  position:relative;
+  background:conic-gradient(var(--green) var(--pct), #f1f5f9 0);
+  transition:.5s;
+}
+.result-circle::before{
+  content:"";
+  position:absolute;
+  inset:14px;
+  background:#fff;
+  border-radius:50%;
+}
+.result-circle .rc-inner{
+  position:relative;
+  z-index:1;
+  text-align:center;
+}
+.result-circle .rc-score{
+  font-size:2.4rem;
+  font-weight:800;
+  color:var(--green);
+  line-height:1;
+  direction:ltr;
+}
+.result-circle .rc-total{
+  font-size:.85rem;
+  color:var(--ink-soft);
+  margin-top:4px;
+}
+.result-screen h3{
+  font-size:1.4rem;
+  font-weight:800;
+  margin-bottom:10px;
+  color:var(--ink);
+}
+.result-screen .rs-message{
+  font-size:.95rem;
+  color:var(--ink-soft);
+  max-width:480px;
+  margin:0 auto 24px;
+  line-height:2;
+}
+.rs-stats{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:26px;
+}
+.rs-stat{
+  background:#fbfdff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:14px 22px;
+  min-width:120px;
+}
+.rs-stat .rs-num{
+  font-size:1.4rem;
+  font-weight:800;
+  line-height:1.2;
+}
+.rs-stat .rs-lbl{
+  font-size:.75rem;
+  color:var(--ink-soft);
+  margin-top:2px;
+}
+.rs-stat.green .rs-num{color:var(--green)}
+.rs-stat.red .rs-num{color:var(--red)}
+.rs-stat.blue .rs-num{color:var(--blue)}
+
+.hidden{display:none !important}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site">
+  <div class="head-wrap">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3c0 4 8 5 8 9s-8 5-8 9"/>
+          <path d="M16 3c0 4-8 5-8 9s8 5 8 9"/>
+          <path d="M9 7h6M9 12h6M9 17h6"/>
+        </svg>
+      </div>
+      <div>
+        <h1>آکادمی بیوانفورماتیک</h1>
+        <p>آموزش تعاملی برای مهندسی پزشکی</p>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">خانه</a>
+      <a href="alignment.html">هم‌ترازی</a>
+      <a href="proteins.html">پروتئین‌ها</a>
+      <a href="databases.html">پایگاه داده‌ها</a>
+      <a href="quiz.html" class="active">خودآزمایی</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <span class="badge">ماژول ۵ — واژه‌نامه و خودآزمایی</span>
+  <h2>دانش خود را <span>بسنج</span></h2>
+  <p class="lead">
+    واژه‌نامه‌ی تعاملی اصطلاحات بیوانفورماتیک و ۱۵ سوال چند گزینه‌ای با بازخورد فوری. بعد از پاسخ، توضیح علمی هر سوال را ببینید.
+  </p>
+</div>
+
+<!-- ===== PAGE TABS ===== -->
+<section style="padding-top:20px;">
+  <div class="page-tabs" id="pageTabs">
+    <button class="active" data-page="glossary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      واژه‌نامه
+    </button>
+    <button data-page="quiz">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      خودآزمایی
+    </button>
+  </div>
+
+  <!-- ===== GLOSSARY PAGE ===== -->
+  <div id="glossaryPage">
+    <div class="glossary-controls">
+      <div class="glossary-search">
+        <input type="text" id="termSearch" placeholder="جستجوی اصطلاح (فارسی یا انگلیسی)…" autocomplete="off">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+        </svg>
+      </div>
+      <div class="category-chips" id="categoryChips"></div>
+    </div>
+
+    <div class="glossary-grid" id="glossaryGrid"></div>
+  </div>
+
+  <!-- ===== QUIZ PAGE ===== -->
+  <div id="quizPage" class="hidden">
+    <!-- Intro -->
+    <div class="quiz-intro" id="quizIntro">
+      <h3>آماده‌ای دانشت را بسنجی؟</h3>
+      <p>۱۵ سوال چند گزینه‌ای از تمام ماژول‌های آکادمی. بعد از هر پاسخ، توضیح علمی را ببین.</p>
+      <div class="quiz-stats">
+        <div class="quiz-stat">
+          <div class="qs-num">۱۵</div>
+          <div class="qs-lbl">سوال</div>
+        </div>
+        <div class="quiz-stat">
+          <div class="qs-num">۵</div>
+          <div class="qs-lbl">حوزه</div>
+        </div>
+        <div class="quiz-stat">
+          <div class="qs-num">بی‌نهایت</div>
+          <div class="qs-lbl">تلاش</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" style="margin-top:24px;background:#fff;color:#7c3aed;" id="btnStartQuiz">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        شروع آزمون
+      </button>
+    </div>
+
+    <!-- Progress -->
+    <div class="quiz-progress hidden" id="quizProgress">
+      <span class="qp-text" id="qpText">سوال ۱ از ۱۵</span>
+      <div class="qp-bar">
+        <div class="qp-fill" id="qpFill" style="width:0%"></div>
+      </div>
+      <span class="qp-score" id="qpScore">امتیاز: ۰</span>
+    </div>
+
+    <!-- Question container -->
+    <div id="quizContainer"></div>
+
+    <!-- Result screen -->
+    <div class="result-screen hidden" id="resultScreen">
+      <div class="result-circle" id="resultCircle">
+        <div class="rc-inner">
+          <div class="rc-score" id="rcScore">۰</div>
+          <div class="rc-total" id="rcTotal">از ۱۵</div>
+        </div>
+      </div>
+      <h3 id="resultTitle">نتیجه‌ی آزمون</h3>
+      <p class="rs-message" id="resultMessage"></p>
+      <div class="rs-stats">
+        <div class="rs-stat green">
+          <div class="rs-num" id="rsCorrect">۰</div>
+          <div class="rs-lbl">پاسخ صحیح</div>
+        </div>
+        <div class="rs-stat red">
+          <div class="rs-num" id="rsWrong">۰</div>
+          <div class="rs-lbl">پاسخ غلط</div>
+        </div>
+        <div class="rs-stat blue">
+          <div class="rs-num" id="rsPct">۰٪</div>
+          <div class="rs-lbl">درصد</div>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="btnRestartQuiz" style="margin:0 auto;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        آزمون مجدد
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site">
+  <div class="fname">ابوالفضل اجلّی</div>
+  <div class="fsub">دانشجوی مهندسی پزشکی — دانشگاه صنعتی همدان</div>
+  <small>⚠️ محتوای این بخش جنبه آموزشی دارد و بر اساس منابع معتبر بیوانفورماتیک تهیه شده است.</small>
+</footer>
+
+<script src="quiz.js"></script>
+</body>
+</html>

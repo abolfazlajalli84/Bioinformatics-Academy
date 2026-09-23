@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پایگاه داده‌های زیستی | آکادمی بیوانفورماتیک</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ===== Database page specific ===== */
+.db-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:18px;
+}
+.db-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:22px;
+  box-shadow:var(--shadow);
+  transition:.25s;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.db-card::before{
+  content:"";
+  position:absolute;
+  top:0;right:0;left:0;
+  height:4px;
+  background:linear-gradient(90deg,var(--blue),var(--purple));
+}
+.db-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--blue);
+  box-shadow:var(--shadow-lg);
+}
+.db-card .db-head{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:14px;
+}
+.db-card .db-logo{
+  width:46px;height:46px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-weight:800;
+  font-size:.7rem;
+  direction:ltr;
+  text-align:center;
+  line-height:1.1;
+  padding:4px;
+}
+.db-card .db-logo.green{background:var(--green-soft);color:var(--green)}
+.db-card .db-logo.purple{background:var(--purple-soft);color:var(--purple)}
+.db-card .db-logo.amber{background:var(--amber-soft);color:var(--amber)}
+.db-card .db-logo.red{background:var(--red-soft);color:var(--red)}
+.db-card h4{
+  font-size:1rem;
+  font-weight:700;
+  color:var(--ink);
+  line-height:1.5;
+}
+.db-card .db-en{
+  font-size:.74rem;
+  color:var(--ink-soft);
+  direction:ltr;
+  text-align:right;
+  font-weight:400;
+}
+.db-card .db-desc{
+  font-size:.85rem;
+  color:var(--ink-soft);
+  line-height:1.9;
+  margin-bottom:14px;
+  flex-grow:1;
+}
+.db-card .db-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:14px;
+}
+.db-card .db-tag{
+  font-size:.7rem;
+  padding:3px 10px;
+  border-radius:20px;
+  background:#f1f5f9;
+  color:var(--ink-soft);
+  font-weight:500;
+}
+.db-card .db-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.8rem;
+  font-weight:600;
+  color:var(--blue);
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:9px;
+  background:var(--blue-soft);
+  transition:.2s;
+  direction:ltr;
+  align-self:flex-start;
+}
+.db-card .db-link:hover{
+  background:var(--blue);
+  color:#fff;
+}
+.db-card .db-link svg{
+  width:14px;height:14px;
+}
+
+/* ===== Search section ===== */
+.search-box{
+  max-width:640px;
+  margin:0 auto 30px;
+  position:relative;
+}
+.search-box input{
+  width:100%;
+  padding:14px 48px 14px 18px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-family:inherit;
+  font-size:.92rem;
+  color:var(--ink);
+  box-shadow:var(--shadow);
+  outline:none;
+  transition:.2s;
+}
+.search-box input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 4px var(--blue-soft);
+}
+.search-box svg{
+  position:absolute;
+  right:16px;top:50%;
+  transform:translateY(-50%);
+  width:20px;height:20px;
+  color:var(--blue);
+  pointer-events:none;
+}
+
+/* ===== Format section ===== */
+.format-tabs{
+  display:flex;
+  gap:6px;
+  margin-bottom:18px;
+  background:#f1f5f9;
+  padding:5px;
+  border-radius:12px;
+  width:fit-content;
+  flex-wrap:wrap;
+}
+.format-tabs button{
+  padding:8px 18px;
+  border-radius:9px;
+  border:none;
+  background:transparent;
+  font-family:inherit;
+  font-size:.82rem;
+  font-weight:600;
+  color:var(--ink-soft);
+  cursor:pointer;
+  transition:.2s;
+}
+.format-tabs button.active{
+  background:#fff;
+  color:var(--blue);
+  box-shadow:0 2px 6px rgba(15,23,42,.08);
+}
+.format-content{
+  background:#0f172a;
+  border-radius:12px;
+  padding:20px 24px;
+  overflow-x:auto;
+}
+.format-content .code-line{
+  font-family:'Courier New',monospace;
+  font-size:13px;
+  direction:ltr;
+  text-align:left;
+  line-height:1.9;
+  color:#e2e8f0;
+  white-space:pre;
+}
+.format-content .code-line .key{color:#22c55e}
+.format-content .code-line .comment{color:#64748b}
+.format-content .code-line .value{color:#fbbf24}
+.format-note{
+  background:var(--blue-soft);
+  border:1px solid var(--blue-border);
+  border-right:4px solid var(--blue);
+  border-radius:10px;
+  padding:12px 16px;
+  font-size:.84rem;
+  color:#1e40af;
+  line-height:1.9;
+  margin-top:14px;
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site">
+  <div class="head-wrap">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3c0 4 8 5 8 9s-8 5-8 9"/>
+          <path d="M16 3c0 4-8 5-8 9s8 5 8 9"/>
+          <path d="M9 7h6M9 12h6M9 17h6"/>
+        </svg>
+      </div>
+      <div>
+        <h1>آکادمی بیوانفورماتیک</h1>
+        <p>آموزش تعاملی برای مهندسی پزشکی</p>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html">خانه</a>
+      <a href="index.html#analyzer">ابزار توالی</a>
+      <a href="alignment.html">هم‌ترازی</a>
+      <a href="proteins.html">پروتئین‌ها</a>
+      <a href="databases.html" class="active">پایگاه داده‌ها</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <span class="badge">ماژول ۴ — پایگاه داده‌های زیستی</span>
+  <h2>دنیای <span>داده‌های زیستی</span> را بشناس</h2>
+  <p class="lead">
+    پایگاه‌های داده مهم بیوانفورماتیک، فرمت‌های استاندارد فایل‌ها و ابزارهای آنلاین. با این دانش می‌توانید داده‌های زیستی را جستجو، دانلود و تحلیل کنید.
+  </p>
+</div>
+
+<!-- ===== DATABASES SECTION ===== -->
+<section id="databases">
+  <div class="sec-head">
+    <div class="eyebrow">پایگاه‌های داده</div>
+    <h3>مهم‌ترین پایگاه‌های داده بیوانفورماتیک</h3>
+    <p>۹ پایگاه داده معتبر و پرکاربرد در تحقیقات بیوانفورماتیک</p>
+  </div>
+
+  <!-- Search -->
+  <div class="search-box">
+    <input type="text" id="dbSearch" placeholder="جستجوی پایگاه داده (فارسی یا انگلیسی)…" autocomplete="off">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>
+    </svg>
+  </div>
+
+  <div class="db-grid" id="dbGrid"></div>
+</section>
+
+<!-- ===== FORMATS SECTION ===== -->
+<section id="formats">
+  <div class="sec-head">
+    <div class="eyebrow">فرمت‌های فایل</div>
+    <h3>فرمت‌های استاندارد داده‌های زیستی</h3>
+    <p>هر پایگاه داده یا ابزار، از فرمت خاصی برای ذخیره‌ی داده استفاده می‌کند</p>
+  </div>
+
+  <div class="analyzer">
+    <div class="format-tabs" id="formatTabs">
+      <button class="active" data-format="fasta">FASTA</button>
+      <button data-format="fastq">FASTQ</button>
+      <button data-format="genbank">GenBank</button>
+      <button data-format="pdb">PDB</button>
+      <button data-format="vcf">VCF</button>
+    </div>
+
+    <div class="format-content" id="formatContent"></div>
+    <div class="format-note" id="formatNote"></div>
+  </div>
+</section>
+
+<!-- ===== TOOLS SECTION ===== -->
+<section id="tools">
+  <div class="sec-head">
+    <div class="eyebrow">ابزارهای آنلاین</div>
+    <h3>ابزارهای پرکاربرد بیوانفورماتیک</h3>
+    <p>۶ ابزار آنلاین معتبر که هر مهندس پزشکی باید بشناسد</p>
+  </div>
+
+  <div class="db-grid" id="toolsGrid"></div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site">
+  <div class="fname">ابوالفضل اجلّی</div>
+  <div class="fsub">دانشجوی مهندسی پزشکی — دانشگاه صنعتی همدان</div>
+  <small>⚠️ لینک‌های این صفحه به پایگاه‌های داده‌ی بین‌المللی اشاره دارند. برخی ممکن است از ایران قابل دسترسی نباشند.</small>
+</footer>
+
+<script src="databases.js"></script>
+</body>
+</html>

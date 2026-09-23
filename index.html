@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آکادمی بیوانفورماتیک | ابوالفضل اجلّی</title>
+<meta name="description" content="فضای آموزشی تعاملی بیوانفورماتیک برای دانشجویان مهندسی پزشکی — تحلیل توالی، هم‌ترازی، پروتئین، پایگاه داده و ابزارها.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site">
+  <div class="head-wrap">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3c0 4 8 5 8 9s-8 5-8 9"/>
+          <path d="M16 3c0 4-8 5-8 9s8 5 8 9"/>
+          <path d="M9 7h6M9 12h6M9 17h6"/>
+        </svg>
+      </div>
+      <div>
+        <h1>آکادمی بیوانفورماتیک</h1>
+        <p>آموزش تعاملی برای مهندسی پزشکی</p>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <a href="index.html" class="active">خانه</a>
+      <a href="#analyzer">ابزار توالی</a>
+      <a href="#modules">ماژول‌ها</a>
+      <a href="#about">درباره</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<div class="hero">
+  <span class="badge">پروژه آموزشی متن‌باز</span>
+  <h2>دنیای <span>بیوانفورماتیک</span> را ساده یاد بگیر</h2>
+  <p class="lead">
+    یک فضای آموزشی تعاملی برای دانشجویان مهندسی پزشکی که با آن می‌توانید توالی‌های DNA را تحلیل کنید، پروتئین ترجمه کنید، هم‌ترازی انجام دهید و با ابزارهای واقعی بیوانفورماتیک کار کنید.
+  </p>
+  <div class="hero-buttons">
+    <a href="#analyzer" class="btn btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+      شروع تحلیل توالی
+    </a>
+    <a href="#modules" class="btn btn-secondary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      مشاهده ماژول‌ها
+    </a>
+  </div>
+</div>
+
+<!-- ===== STATS ===== -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="num">۶</div>
+    <div class="lbl">ماژول آموزشی</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">۲۰+</div>
+    <div class="lbl">ابزار تعاملی</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">۱۰۰٪</div>
+    <div class="lbl">رایگان و متن‌باز</div>
+  </div>
+  <div class="stat-card">
+    <div class="num">FA</div>
+    <div class="lbl">فارسی و راست‌چین</div>
+  </div>
+</div>
+
+<!-- ===== ANALYZER SECTION ===== -->
+<section id="analyzer">
+  <div class="sec-head">
+    <div class="eyebrow">ابزار تعاملی</div>
+    <h3>تحلیل توالی DNA</h3>
+    <p>توالی DNA خود را وارد کنید یا از نمونه‌های آماده استفاده کنید. ابزار به‌صورت خودکار ترجمه، محاسبه GC و شناسایی ORF را انجام می‌دهد.</p>
+  </div>
+
+  <div class="analyzer">
+    <h3>ورودی توالی</h3>
+    <p class="hint">توالی DNA را با حروف A، T، G، C وارد کنید. حروف کوچک و فاصله‌ها خودکار حذف می‌شوند.</p>
+
+    <textarea id="dnaInput" placeholder="مثلاً: ATGGCTAGCTAGCTAGCTAA"></textarea>
+
+    <div class="input-row">
+      <span style="font-size:.82rem;color:var(--ink-soft);align-self:center;margin-left:6px;">نمونه‌های آماده:</span>
+      <button class="chip" data-sample="short">توالی کوتاه</button>
+      <button class="chip" data-sample="insulin">انسولین انسانی</button>
+      <button class="chip" data-sample="gfp">پروتئین GFP</button>
+    </div>
+
+    <div class="actions-row">
+      <button class="action-btn primary" id="btnTranslate">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+        ترجمه به پروتئین
+      </button>
+      <button class="action-btn" id="btnGC">محاسبه GC</button>
+      <button class="action-btn" id="btnRC">مکمل معکوس</button>
+      <button class="action-btn" id="btnORF">یافتن ORF</button>
+      <button class="action-btn" id="btnClear">پاک کردن</button>
+    </div>
+
+    <div id="results"></div>
+
+    <div class="results-grid" style="margin-top:20px;">
+      <div class="result-card">
+        <div class="r-label">طول توالی</div>
+        <div class="r-value" id="statLen">۰<span class="unit"> nt</span></div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">محتوای GC</div>
+        <div class="r-value" id="statGC">۰٪</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">محتوای AT</div>
+        <div class="r-value" id="statAT">۰٪</div>
+      </div>
+      <div class="result-card">
+        <div class="r-label">تعداد کدون</div>
+        <div class="r-value" id="statCodons">۰</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MODULES SECTION ===== -->
+<section id="modules">
+  <div class="sec-head">
+    <div class="eyebrow">نقشه راه</div>
+    <h3>۶ ماژول آموزشی</h3>
+    <p>این پروژه به‌صورت فاز‌به‌فاز ساخته می‌شود. هر ماژول شامل آموزش، ابزار تعاملی و مثال‌های عملی است. برای ورود به هر ماژول، روی کارت آن کلیک کنید.</p>
+  </div>
+
+  <div class="roadmap-grid">
+    <!-- ماژول ۱: تحلیل توالی -->
+    <a href="#analyzer" class="module-card" style="text-decoration:none;color:inherit;display:block;">
+      <span class="m-num">ماژول ۱</span>
+      <div class="m-icon green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3c0 4 8 5 8 9s-8 5-8 9"/><path d="M16 3c0 4-8 5-8 9s8 5 8 9"/></svg>
+      </div>
+      <h4>تحلیل توالی</h4>
+      <p>ترجمه DNA به پروتئین، محاسبه GC content، مکمل معکوس، شناسایی ORF و ابزار تعاملی.</p>
+      <span class="m-status ready">فعال</span>
+    </a>
+
+    <!-- ماژول ۲: هم‌ترازی -->
+    <a href="alignment.html" class="module-card" style="text-decoration:none;color:inherit;display:block;">
+      <span class="m-num">ماژول ۲</span>
+      <div class="m-icon blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </div>
+      <h4>هم‌ترازی توالی‌ها</h4>
+      <p>الگوریتم‌های Needleman-Wunsch (Global) و Smith-Waterman (Local) با نمایش بصری ماتریس.</p>
+      <span class="m-status ready">فعال</span>
+    </a>
+
+    <!-- ماژول ۳: پروتئین‌ها -->
+    <a href="proteins.html" class="module-card" style="text-decoration:none;color:inherit;display:block;">
+      <span class="m-num">ماژول ۳</span>
+      <div class="m-icon purple">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+      </div>
+      <h4>ساختار پروتئین</h4>
+      <p>ساختار چهار سطحی، پیش‌بینی ساختار دوم، نمایش سه‌بعدی با 3Dmol.js.</p>
+      <span class="m-status ready">فعال</span>
+    </a>
+
+    <!-- ماژول ۴: پایگاه داده‌ها -->
+    <a href="databases.html" class="module-card" style="text-decoration:none;color:inherit;display:block;">
+      <span class="m-num">ماژول ۴</span>
+      <div class="m-icon amber">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>
+      </div>
+      <h4>پایگاه داده‌ها</h4>
+      <p>NCBI، GenBank، UniProt، PDB و Ensembl با آموزش جستجو و فرمت‌ها.</p>
+      <span class="m-status ready">فعال</span>
+    </a>
+
+    <!-- ماژول ۵: ابزارها -->
+    <a href="databases.html#tools" class="module-card" style="text-decoration:none;color:inherit;display:block;">
+      <span class="m-num">ماژول ۵</span>
+      <div class="m-icon green">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9l-3.8 3.8z"/></svg>
+      </div>
+      <h4>ابزارهای بیوانفورماتیک</h4>
+      <p>BLAST، Clustal Omega، طراحی پرایمر، درخت فیلوژنتیک و ابزارهای آنلاین.</p>
+      <span class="m-status ready">فعال</span>
+    </a>
+
+    <!-- ماژول ۶: واژه‌نامه و خودآزمایی -->
+    <a href="quiz.html" class="module-card" style="text-decoration:none;color:inherit;display:block;">
+      <span class="m-num">ماژول ۶</span>
+      <div class="m-icon blue">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <h4>واژه‌نامه و خودآزمایی</h4>
+      <p>واژه‌نامه تعاملی اصطلاحات و سوالات چند گزینه‌ای با بازخورد فوری.</p>
+      <span class="m-status ready">فعال</span>
+    </a>
+  </div>
+</section>
+
+<!-- ===== ABOUT SECTION ===== -->
+<section id="about">
+  <div class="sec-head">
+    <div class="eyebrow">درباره پروژه</div>
+    <h3>چرا این پروژه؟</h3>
+    <p>بیوانفورماتیک پل بین مهندسی پزشکی، زیست‌شناسی و علوم کامپیوتر است. متأسفانه منابع فارسی تعاملی در این حوزه بسیار کم است.</p>
+  </div>
+
+  <div class="roadmap-grid">
+    <div class="module-card">
+      <h4>🎯 هدف</h4>
+      <p>ساخت یک فضای آموزشی کامل و تعاملی که دانشجویان مهندسی پزشکی بتوانند مفاهیم بیوانفورماتیک را به‌صورت عملی یاد بگیرند.</p>
+    </div>
+    <div class="module-card">
+      <h4>👥 مخاطب</h4>
+      <p>دانشجویان مهندسی پزشکی، زیست‌فناوری، علوم کامپیوتر و هر کسی که به تحلیل داده‌های زیستی علاقه دارد.</p>
+    </div>
+    <div class="module-card">
+      <h4>🛠️ فناوری</h4>
+      <p>HTML، CSS و JavaScript خالص. بدون فریم‌ورک سنگین. کاملاً متن‌باز و قابل توسعه.</p>
+    </div>
+    <div class="module-card">
+      <h4>📖 منابع</h4>
+      <p>محتوا بر اساس کتاب‌های مرجع بیوانفورماتیک و پایگاه‌های داده معتبر علمی تهیه می‌شود.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site">
+  <div class="fname">ابوالفضل اجلّی</div>
+  <div class="fsub">دانشجوی مهندسی پزشکی — دانشگاه صنعتی همدان</div>
+  <small>
+    ⚠️ این پروژه صرفاً جنبه آموزشی دارد و برای کارهای تحقیقاتی یا بالینی باید از ابزارهای تخصصی و معتبر استفاده شود. تمام محتواها متن‌باز و رایگان هستند.
+  </small>
+</footer>
+
+<script src="sequence-analysis.js"></script>
+</body>
+</html>
